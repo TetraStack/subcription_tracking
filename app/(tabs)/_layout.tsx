@@ -1,5 +1,5 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Link, Tabs } from "expo-router";
+import { Link, Tabs, useNavigation } from "expo-router";
 import { PlusCircle, PlusIcon } from "lucide-react-native";
 import { Pressable, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -13,7 +13,7 @@ export default function RootLayout() {
         tabBarActiveTintColor: "black",
         tabBarStyle: {
           height: 30 + insets.bottom,
-          paddingBottom: insets.bottom,
+          marginBottom: 20,
         },
       }}
     >

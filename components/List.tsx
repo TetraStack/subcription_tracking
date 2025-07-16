@@ -1,11 +1,20 @@
 import { View, Text, ScrollView, FlatList } from "react-native";
 import React, { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
-import { subscriptions } from "~/data/data";
-import dayjs from "dayjs";
 
-const List = () => {
+import dayjs from "dayjs";
+import { Subscriptions } from "~/types/subscription";
+import { getNextDueDate } from "~/utils/helper";
+
+const List = ({ subscriptions }: { subscriptions: Subscriptions[] }) => {
   const [value, setValue] = useState("List");
+
+  // Sort subscriptions by next due date ascending
+  const sortedSubscriptions = [...subscriptions].sort((a, b) => {
+    const nextDueA = getNextDueDate(a.subscription_date, a.subscription_type);
+    const nextDueB = getNextDueDate(b.subscription_date, b.subscription_type);
+    return new Date(nextDueA).getTime() - new Date(nextDueB).getTime();
+  });
 
   const getDaysRemaining = (date: string) => {
     const now = dayjs();
@@ -32,9 +41,13 @@ const List = () => {
           <FlatList
             className="max-h-[400]"
             showsVerticalScrollIndicator={false}
-            data={subscriptions}
+            data={sortedSubscriptions}
             renderItem={({ item }) => {
-              const { label, isDue } = getDaysRemaining(item.subscription_date);
+              const nextdueDate = getNextDueDate(
+                item.subscription_date,
+                item.subscription_type
+              );
+              const { label, isDue } = getDaysRemaining(nextdueDate);
               return (
                 <View
                   key={item.subscription_id}
@@ -53,12 +66,12 @@ const List = () => {
                     </Text>
                   </View>
                   <Text className="text-base font-semibold text-gray-800">
-                    ${item.subscription_amount.toFixed(2)}
+                    ${Number(item.subscription_amount).toFixed(2)}
                   </Text>
                 </View>
               );
             }}
-            keyExtractor={(item) => item.subscription_id}
+            keyExtractor={(item) => item.subscription_name}
           />
         </TabsContent>
         <TabsContent value="Calendar">

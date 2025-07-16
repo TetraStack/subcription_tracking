@@ -63,7 +63,7 @@ export default function RootLayout() {
           name="createSubscription"
           options={{
             headerTitle: "Add Subscription",
-            headerBackTitle: "Home",
+            headerBackTitle: " Home ",
           }}
         />
       </Stack>
