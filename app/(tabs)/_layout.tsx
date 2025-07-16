@@ -1,5 +1,7 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Tabs } from "expo-router";
+import { Link, Tabs } from "expo-router";
+import { PlusCircle, PlusIcon } from "lucide-react-native";
+import { Pressable, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ThemeToggle } from "~/components/ThemeToggle";
 
@@ -19,6 +21,13 @@ export default function RootLayout() {
         name="index"
         options={{
           title: "Subscription",
+          headerRight: () => (
+            <Link href="/createSubscription" asChild>
+              <Pressable className="mr-5">
+                <PlusIcon />
+              </Pressable>
+            </Link>
+          ),
           tabBarIcon: ({ color }) => (
             <FontAwesome size={28} name="home" color={color} />
           ),

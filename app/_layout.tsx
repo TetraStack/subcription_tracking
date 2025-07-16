@@ -1,15 +1,21 @@
-import '~/global.css';
+import "~/global.css";
 
-import { DarkTheme, DefaultTheme, Theme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import * as React from 'react';
-import { Appearance, Platform, View } from 'react-native';
-import { NAV_THEME } from '~/lib/constants';
-import { useColorScheme } from '~/lib/useColorScheme';
-import { PortalHost } from '@rn-primitives/portal';
-import { ThemeToggle } from '~/components/ThemeToggle';
-import { setAndroidNavigationBar } from '~/lib/android-navigation-bar';
+import {
+  DarkTheme,
+  DefaultTheme,
+  Theme,
+  ThemeProvider,
+} from "@react-navigation/native";
+import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import * as React from "react";
+import { Appearance, Platform, View } from "react-native";
+import { NAV_THEME } from "~/lib/constants";
+import { useColorScheme } from "~/lib/useColorScheme";
+import { PortalHost } from "@rn-primitives/portal";
+import { ThemeToggle } from "~/components/ThemeToggle";
+import { setAndroidNavigationBar } from "~/lib/android-navigation-bar";
+import BackTitle from "~/components/BackTitle";
 
 const LIGHT_THEME: Theme = {
   ...DefaultTheme,
@@ -23,7 +29,7 @@ const DARK_THEME: Theme = {
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
-} from 'expo-router';
+} from "expo-router";
 
 const usePlatformSpecificSetup = Platform.select({
   web: useSetWebBackgroundClassName,
@@ -37,12 +43,27 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
-      <StatusBar style={isDarkColorScheme ? 'light' : 'dark'} />
-      <Stack>
+      <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
+      <Stack
+        screenOptions={{
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+          headerBackTitle: "",
+        }}
+      >
         <Stack.Screen
           name="(tabs)"
           options={{
             headerShown: false,
+            headerBackTitle: "",
+          }}
+        />
+        <Stack.Screen
+          name="createSubscription"
+          options={{
+            headerTitle: "Add Subscription",
+            headerBackTitle: "Home",
           }}
         />
       </Stack>
@@ -52,19 +73,21 @@ export default function RootLayout() {
 }
 
 const useIsomorphicLayoutEffect =
-  Platform.OS === 'web' && typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect;
+  Platform.OS === "web" && typeof window === "undefined"
+    ? React.useEffect
+    : React.useLayoutEffect;
 
 function useSetWebBackgroundClassName() {
   useIsomorphicLayoutEffect(() => {
     // Adds the background color to the html element to prevent white background on overscroll.
-    document.documentElement.classList.add('bg-background');
+    document.documentElement.classList.add("bg-background");
   }, []);
 }
 
 function useSetAndroidNavigationBar() {
   React.useLayoutEffect(() => {
-    setAndroidNavigationBar(Appearance.getColorScheme() ?? 'light');
+    setAndroidNavigationBar(Appearance.getColorScheme() ?? "light");
   }, []);
 }
 
-function noop() { }
+function noop() {}
