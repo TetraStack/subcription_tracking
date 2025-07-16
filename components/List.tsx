@@ -1,7 +1,8 @@
-import { View, Text, ScrollView, FlatList } from "react-native";
-import React, { useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
-
+import { Calendar } from 'react-native-calendars';
+import { View, Text, ScrollView, FlatList } from 'react-native';
+import React, { useState, useMemo } from 'react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
+import { subscriptions } from '~/data/data';
 import dayjs from "dayjs";
 import { Subscriptions } from "~/types/subscription";
 import { getNextDueDate } from "~/utils/helper";
@@ -58,9 +59,8 @@ const List = ({ subscriptions }: { subscriptions: Subscriptions[] }) => {
                       {item.subscription_name}
                     </Text>
                     <Text
-                      className={`text-sm ${
-                        isDue ? "text-red-500" : "text-gray-500"
-                      }`}
+                      className={`text-sm ${isDue ? "text-red-500" : "text-gray-500"
+                        }`}
                     >
                       {label}
                     </Text>
