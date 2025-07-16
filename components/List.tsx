@@ -1,12 +1,15 @@
 import { Calendar } from 'react-native-calendars';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, Modal, Pressable } from 'react-native';
 import React, { useState, useMemo } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
-import { subscriptions } from '~/data/data';
+import { Subscriptions, subscriptions } from '~/data/data';
 import dayjs from 'dayjs';
 
 const List = () => {
     const [value, setValue] = useState('List');
+    const [selectedDate, setSelectedDate] = useState<string | null>(null);
+    const [selectedSubscriptions, setSelectedSubscriptions] = useState<Subscriptions[]>([]);
+    const [modalVisible, setModalVisible] = useState(false);
 
     const getDaysRemaining = (date: string) => {
         const now = dayjs();
@@ -87,6 +90,19 @@ const List = () => {
                     <Calendar
                         markingType={'custom'}
                         markedDates={markedDates}
+                        onDayPress={(day) => {
+                            const selected = day.dateString;
+
+                            const matchedSubs = subscriptions.filter(
+                                (sub) => dayjs(sub.subscription_date).format('YYYY-MM-DD') === selected
+                            );
+
+                            if (matchedSubs.length > 0) {
+                                setSelectedDate(selected);
+                                setSelectedSubscriptions(matchedSubs);
+                                setModalVisible(true);
+                            }
+                        }}
                         theme={{
                             backgroundColor: '#fff',
                             calendarBackground: '#fff',
@@ -107,6 +123,34 @@ const List = () => {
                             textDayHeaderFontSize: 12,
                         }}
                     />
+                    <Modal
+                        transparent={true}
+                        animationType="fade"
+                        visible={modalVisible}
+                        onRequestClose={() => setModalVisible(false)}
+                    >
+                        <View className="flex-1 justify-center items-center bg-black/40">
+                            <View className="bg-white rounded-xl p-6 w-[80%] shadow-lg">
+                                <Text className="text-lg font-bold mb-3">
+                                    Subscriptions on {selectedDate}
+                                </Text>
+                                {selectedSubscriptions.map((sub) => (
+                                    <View key={sub.subscription_id} className="mb-2">
+                                        <Text className="text-base font-semibold">{sub.subscription_name}</Text>
+                                        <Text className="text-sm text-gray-600">
+                                            Amount: ${sub.subscription_amount.toFixed(2)}
+                                        </Text>
+                                    </View>
+                                ))}
+                                <Pressable
+                                    onPress={() => setModalVisible(false)}
+                                    className="mt-4 p-2 bg-blue-600 rounded-lg"
+                                >
+                                    <Text className="text-white text-center">Close</Text>
+                                </Pressable>
+                            </View>
+                        </View>
+                    </Modal>
                 </TabsContent>
             </Tabs>
         </View>
