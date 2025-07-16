@@ -1,5 +1,6 @@
-import { View, Text, ScrollView } from 'react-native'
-import React, { useState } from 'react'
+import { Calendar } from 'react-native-calendars';
+import { View, Text, ScrollView } from 'react-native';
+import React, { useState, useMemo } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { subscriptions } from '~/data/data';
 import dayjs from 'dayjs';
@@ -16,14 +17,36 @@ const List = () => {
         if (diff === 0) return { label: 'Due today', isDue: true };
         return { label: `Due in ${diff} day${diff > 1 ? 's' : ''}`, isDue: false };
     };
+
+    const markedDates = useMemo(() => {
+        const marks: Record<string, any> = {};
+
+        subscriptions.forEach((sub) => {
+            const date = dayjs(sub.subscription_date).format('YYYY-MM-DD');
+            const { isDue } = getDaysRemaining(sub.subscription_date);
+
+            marks[date] = {
+                marked: true,
+                dotColor: isDue ? 'red' : '#007AFF',
+                customStyles: {
+                    container: {
+                        backgroundColor: isDue ? '#ffe5e5' : '#e6f0ff',
+                    },
+                    text: {
+                        color: isDue ? '#cc0000' : '#004080',
+                        fontWeight: 'bold',
+                    },
+                },
+            };
+        });
+
+        return marks;
+    }, [subscriptions]);
+
     return (
         <View className='flex justify-center p-6'>
             <Text className='text-2xl font-semibold pb-3'>Upcoming</Text>
-            <Tabs
-                value={value}
-                onValueChange={setValue}
-                className='w-[350px]'
-            >
+            <Tabs value={value} onValueChange={setValue} className='w-[350px]'>
                 <TabsList className='flex-row w-full'>
                     <TabsTrigger value='List' className='flex-1'>
                         <Text>List</Text>
@@ -32,6 +55,7 @@ const List = () => {
                         <Text>Calendar</Text>
                     </TabsTrigger>
                 </TabsList>
+
                 <TabsContent value='List'>
                     <ScrollView className="h-[500px]">
                         {subscriptions.map((subscription) => {
@@ -58,12 +82,35 @@ const List = () => {
                         })}
                     </ScrollView>
                 </TabsContent>
+
                 <TabsContent value='Calendar'>
-                    <Text>Calendar</Text>
+                    <Calendar
+                        markingType={'custom'}
+                        markedDates={markedDates}
+                        theme={{
+                            backgroundColor: '#fff',
+                            calendarBackground: '#fff',
+                            textSectionTitleColor: '#888',
+                            dayTextColor: '#000',
+                            monthTextColor: '#000',
+                            selectedDayBackgroundColor: '#007AFF',
+                            todayTextColor: '#007AFF',
+                            arrowColor: '#007AFF',
+                            textDisabledColor: '#ccc',
+                            dotColor: '#007AFF',
+                            selectedDotColor: '#ffffff',
+                            textDayFontWeight: '400',
+                            textMonthFontWeight: 'bold',
+                            textDayHeaderFontWeight: '500',
+                            textDayFontSize: 14,
+                            textMonthFontSize: 16,
+                            textDayHeaderFontSize: 12,
+                        }}
+                    />
                 </TabsContent>
             </Tabs>
         </View>
-    )
-}
+    );
+};
 
-export default List
+export default List;
