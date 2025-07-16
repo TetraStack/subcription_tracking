@@ -1,8 +1,7 @@
-import { Calendar } from 'react-native-calendars';
-import { View, Text, ScrollView, FlatList } from 'react-native';
-import React, { useState, useMemo } from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
-import { subscriptions } from '~/data/data';
+import { View, Text, ScrollView, FlatList } from "react-native";
+import React, { useState } from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+
 import dayjs from "dayjs";
 import { Subscriptions } from "~/types/subscription";
 import { getNextDueDate } from "~/utils/helper";

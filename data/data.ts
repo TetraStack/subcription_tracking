@@ -1,4 +1,4 @@
-interface Subscriptions {
+export interface Subscriptions {
   subscription_id: string;
   subscription_name: string;
   subscription_date: string;
