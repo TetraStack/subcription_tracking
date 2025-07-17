@@ -1,4 +1,4 @@
-import { Subscriptions } from "~/data/data";
+import { Subscriptions } from "~/types/subscription";
 
 export function calculateMonthlyExpense(
   subscriptions: Subscriptions[]
