@@ -16,7 +16,7 @@ export default function Index() {
       <View className="m-4">
         <Stats subscriptions={subscription} />
       </View>
-      <View>
+      <View >
         <List subscriptions={subscription} />
       </View>
     </View>

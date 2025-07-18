@@ -63,21 +63,13 @@ const createSubscription = () => {
     navigation.goBack();
   };
 
-  const insets = useSafeAreaInsets();
-  const contentInsets = {
-    top: insets.top,
-    bottom: insets.bottom,
-    left: 12,
-    right: 12,
-  };
-
   return (
     <KeyboardAwareScrollView
       className="flex-1"
       contentContainerStyle={{ flexGrow: 1, paddingBottom: 20 }}
     >
       <View className="flex-1 pb-10 ">
-        <View className="flex p-4 gap-4">
+        <View className="flex-1 p-4 gap-4">
           {/* service name */}
           <Controller
             control={control}
@@ -190,25 +182,9 @@ const createSubscription = () => {
                   value={value}
                 />
 
-                {/* <DatePicker
-                  label="Select Date"
-                  // value={value}
-                  onChange={onChange}
-                  placeholder="Choose a date"
-                /> */}
-
                 <DatePicker
                   isVisible={showDatePickerSingle}
                   mode={"single"}
-                  modalStyles={{
-                    backgroundColor: "red",
-
-                    flex: 1,
-                    width: "100%",
-                    height: "100%",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
                   onCancel={() => setShowDatePickerSingle(false)}
                   onConfirm={(output: SingleOutput) => {
                     onChange(output.dateString ?? "");
@@ -240,9 +216,7 @@ const createSubscription = () => {
             name="notification"
           />
           {errors.notification && <Text>This is required.</Text>}
-        </View>
 
-        <View className="flex flex-row px-4 ">
           <NativeButton
             className="bg-blue-500 w-full"
             style={{ height: 55 }}

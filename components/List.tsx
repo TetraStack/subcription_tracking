@@ -56,7 +56,7 @@ const List = ({ subscriptions }: { subscriptions: Subscriptions[] }) => {
     return acc;
   }, {} as any);
   return (
-    <View className="flex justify-center p-6">
+    <View className="flex justify-center p-6 ">
       <Text className="text-2xl font-semibold pb-3">Upcoming</Text>
       <Tabs value={value} onValueChange={setValue} className="w-[350px]">
         <TabsList className="flex-row w-full">
@@ -69,7 +69,7 @@ const List = ({ subscriptions }: { subscriptions: Subscriptions[] }) => {
         </TabsList>
         <TabsContent value="List">
           <FlatList
-            className="max-h-[400]"
+            className="h-[400]"
             showsVerticalScrollIndicator={false}
             data={sortedSubscriptions}
             renderItem={({ item }) => {

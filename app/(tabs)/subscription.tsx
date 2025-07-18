@@ -12,7 +12,6 @@ import {
   Target,
   TvMinimalPlayIcon,
 } from "lucide-react-native";
-import { Subscriptions } from "~/types/subscription";
 
 const Subscription = () => {
   const { subscription, getAllsubscription, updateSubscription } =
@@ -71,7 +70,7 @@ const Subscription = () => {
   };
 
   return (
-    <View className="p-5 ">
+    <View className="p-5 flex-1">
       <View className="flex-row items-center bg-gray-100 rounded-xl px-3 py-5 mb-4">
         <FontAwesome name="search" size={20} color="#888" />
         <TextInput
@@ -83,6 +82,7 @@ const Subscription = () => {
       </View>
 
       <FlatList
+        style={{ flexGrow: 1 }}
         data={filtered}
         renderItem={({ item }) => {
           return (
