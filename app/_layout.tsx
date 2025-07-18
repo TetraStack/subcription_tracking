@@ -16,6 +16,10 @@ import { PortalHost } from "@rn-primitives/portal";
 import { ThemeToggle } from "~/components/ThemeToggle";
 import { setAndroidNavigationBar } from "~/lib/android-navigation-bar";
 import BackTitle from "~/components/BackTitle";
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 
 const LIGHT_THEME: Theme = {
   ...DefaultTheme,
@@ -40,10 +44,12 @@ const usePlatformSpecificSetup = Platform.select({
 export default function RootLayout() {
   usePlatformSpecificSetup();
   const { isDarkColorScheme } = useColorScheme();
+  const insets = useSafeAreaInsets();
 
   return (
     <ThemeProvider value={LIGHT_THEME}>
       <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
+
       <Stack
         screenOptions={{
           headerTitleStyle: {
@@ -59,14 +65,10 @@ export default function RootLayout() {
             headerBackTitle: "",
           }}
         />
-        <Stack.Screen
-          name="createSubscription"
-          options={{
-            headerTitle: "Add Subscription",
-            headerBackTitle: " Home ",
-          }}
-        />
+
+        <Stack.Screen name="(create)" options={{ headerShown: false }} />
       </Stack>
+
       <PortalHost />
     </ThemeProvider>
   );

@@ -2,21 +2,15 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Link, Tabs, useNavigation } from "expo-router";
 import { PlusCircle, PlusIcon } from "lucide-react-native";
 import { Pressable, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 import { ThemeToggle } from "~/components/ThemeToggle";
 
 export default function RootLayout() {
-  const insets = useSafeAreaInsets();
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: "black",
-        tabBarStyle: {
-          height: 30 + insets.bottom,
-          marginBottom: 20,
-        },
-      }}
-    >
+    <Tabs>
       <Tabs.Screen
         name="index"
         options={{
