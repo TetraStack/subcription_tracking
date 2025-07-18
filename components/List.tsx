@@ -1,4 +1,11 @@
-import { View, Text, ScrollView, FlatList, Modal, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  FlatList,
+  Modal,
+  Pressable,
+} from "react-native";
 import React, { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { Calendar } from "react-native-calendars";
@@ -28,7 +35,9 @@ const List = ({ subscriptions }: { subscriptions: Subscriptions[] }) => {
 
   const [selectedDate, setSelectedDate] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedSubscriptions, setSelectedSubscriptions] = useState<Subscriptions[]>([]);
+  const [selectedSubscriptions, setSelectedSubscriptions] = useState<
+    Subscriptions[]
+  >([]);
 
   const markedDates = subscriptions.reduce((acc, sub) => {
     const date = dayjs(sub.subscription_date).format("YYYY-MM-DD");
@@ -47,7 +56,7 @@ const List = ({ subscriptions }: { subscriptions: Subscriptions[] }) => {
     return acc;
   }, {} as any);
   return (
-    <View className="flex justify-center p-6">
+    <View className="flex justify-center p-6 ">
       <Text className="text-2xl font-semibold pb-3">Upcoming</Text>
       <Tabs value={value} onValueChange={setValue} className="w-[350px]">
         <TabsList className="flex-row w-full">
@@ -60,7 +69,7 @@ const List = ({ subscriptions }: { subscriptions: Subscriptions[] }) => {
         </TabsList>
         <TabsContent value="List">
           <FlatList
-            className="max-h-[400]"
+            className="h-[400]"
             showsVerticalScrollIndicator={false}
             data={sortedSubscriptions}
             renderItem={({ item }) => {
@@ -79,8 +88,9 @@ const List = ({ subscriptions }: { subscriptions: Subscriptions[] }) => {
                       {item.subscription_name}
                     </Text>
                     <Text
-                      className={`text-sm ${isDue ? "text-red-500" : "text-gray-500"
-                        }`}
+                      className={`text-sm ${
+                        isDue ? "text-red-500" : "text-gray-500"
+                      }`}
                     >
                       {label}
                     </Text>
@@ -147,9 +157,11 @@ const List = ({ subscriptions }: { subscriptions: Subscriptions[] }) => {
                 </Text>
                 {selectedSubscriptions.map((sub) => (
                   <View key={sub.subscription_id} className="mb-2">
-                    <Text className="text-base font-semibold">{sub.subscription_name}</Text>
+                    <Text className="text-base font-semibold">
+                      {sub.subscription_name}
+                    </Text>
                     <Text className="text-sm text-gray-600">
-                      Amount: ${sub.subscription_amount.toFixed(2)}
+                      Amount: ${Number(sub.subscription_amount).toFixed(2)}
                     </Text>
                   </View>
                 ))}
@@ -163,7 +175,6 @@ const List = ({ subscriptions }: { subscriptions: Subscriptions[] }) => {
             </View>
           </Modal>
         </TabsContent>
-
       </Tabs>
     </View>
   );
