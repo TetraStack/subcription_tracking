@@ -6,6 +6,7 @@ import DatePicker, {
   RangeOutput,
   SingleOutput,
 } from "react-native-neat-date-picker";
+
 import { Switch } from "react-native";
 
 import ModalSelector from "react-native-modal-selector";
@@ -189,9 +190,25 @@ const createSubscription = () => {
                   value={value}
                 />
 
+                {/* <DatePicker
+                  label="Select Date"
+                  // value={value}
+                  onChange={onChange}
+                  placeholder="Choose a date"
+                /> */}
+
                 <DatePicker
                   isVisible={showDatePickerSingle}
                   mode={"single"}
+                  modalStyles={{
+                    backgroundColor: "red",
+
+                    flex: 1,
+                    width: "100%",
+                    height: "100%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
                   onCancel={() => setShowDatePickerSingle(false)}
                   onConfirm={(output: SingleOutput) => {
                     onChange(output.dateString ?? "");
