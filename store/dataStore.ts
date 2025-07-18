@@ -6,6 +6,7 @@ interface dataStoreType {
     subscription: Subscriptions[],
     getAllsubscription: () => Promise<void>
     addSubscription: (data: Subscriptions) => Promise<void>
+    updateSubscription: (data: Subscriptions) => Promise<void>
 }
 
 export const useDataStore = create<dataStoreType>()((set) => ({
@@ -26,5 +27,16 @@ export const useDataStore = create<dataStoreType>()((set) => ({
         set({ subscription: latestData })
 
     },
+
+    updateSubscription: async (data) => {
+        const jsonValue = await AsyncStorage.getItem('subscription');
+        const subscriptions: Subscriptions[] = jsonValue != null ? JSON.parse(jsonValue) : [];
+        const updatedSubscriptions = subscriptions.map((sub) =>
+            sub.subscription_id === data.subscription_id ? { ...sub, ...data } : sub
+        );
+        await AsyncStorage.setItem('subscription', JSON.stringify(updatedSubscriptions));
+        set({ subscription: updatedSubscriptions });
+    }
+
 }))
 

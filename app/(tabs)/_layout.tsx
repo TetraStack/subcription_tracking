@@ -20,7 +20,7 @@ export default function RootLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Subscription",
+          title: "Home",
           headerRight: () => (
             <Link href="/createSubscription" asChild>
               <Pressable className="mr-5">
@@ -44,12 +44,20 @@ export default function RootLayout() {
         }}
       />
       <Tabs.Screen
-        name="setting"
+        name="subscription"
         options={{
-          title: "Setting",
-          headerRight: () => <ThemeToggle />,
+          title: "Subscription",
+          headerRight: () => {
+            return (
+              <Link href={"/createSubscription"} asChild>
+                <Pressable className="mr-5">
+                  <PlusIcon />
+                </Pressable>
+              </Link>
+            );
+          },
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="gear" color={color} />
+            <FontAwesome size={28} name="money" color={color} />
           ),
         }}
       />

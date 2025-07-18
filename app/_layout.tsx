@@ -52,7 +52,7 @@ export default function RootLayout() {
           headerBackTitle: "",
         }}
       >
-        <Stack.Screen
+        {/* <Stack.Screen
           name="(tabs)"
           options={{
             headerShown: false,
@@ -63,6 +63,13 @@ export default function RootLayout() {
           name="createSubscription"
           options={{
             headerTitle: "Add Subscription",
+            headerBackTitle: " Home ",
+          }}
+        /> */}
+        <Stack.Screen
+          name="subscription"
+          options={{
+            headerTitle: "Subscription",
             headerBackTitle: " Home ",
           }}
         />
@@ -90,4 +97,4 @@ function useSetAndroidNavigationBar() {
   }, []);
 }
 
-function noop() { }
+function noop() {}

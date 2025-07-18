@@ -50,6 +50,7 @@ const createSubscription = () => {
         subscription_category: data.category,
         subscription_amount: data.cost,
         subscription_type: data.billing_frequency,
+        subscription_notification: data.notification,
       });
     } catch (error) {
       console.log(error);

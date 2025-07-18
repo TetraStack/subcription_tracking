@@ -5,5 +5,6 @@ export interface Subscriptions {
     subscription_category: string;
     subscription_amount: number;
     subscription_type: string;
+    subscription_notification: boolean;
 }
 
