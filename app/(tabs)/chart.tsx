@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Text, View } from "react-native";
+import Pie from "~/components/Pie";
+
+import { useDataStore } from "~/store/dataStore";
 
 const chart = () => {
+    const { subscription, getAllsubscription } = useDataStore();
+
+    useEffect(() => {
+        getAllsubscription();
+    }, []);
     return (
         <View>
-            <Text>chart</Text>
+            <Pie subscriptions={subscription} />
         </View>
     );
 };
