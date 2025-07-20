@@ -1,11 +1,21 @@
-import React from "react";
-import { Text, View } from "react-native";
+import React, { useEffect } from "react";
+import { ScrollView, Text, View } from "react-native";
+import Bar from "~/components/Bar";
+import Pie from "~/components/Pie";
+
+import { useDataStore } from "~/store/dataStore";
 
 const chart = () => {
+    const { subscription, getAllsubscription } = useDataStore();
+
+    useEffect(() => {
+        getAllsubscription();
+    }, []);
     return (
-        <View>
-            <Text>chart</Text>
-        </View>
+        <ScrollView>
+            <Pie subscriptions={subscription} />
+            <Bar subscriptions={subscription} />
+        </ScrollView>
     );
 };
 
