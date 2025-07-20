@@ -31,7 +31,13 @@ export default function RootLayout() {
         name="chart"
         options={{
           title: "Chart",
-          headerRight: () => <ThemeToggle />,
+          headerRight: () => (
+            <Link href="/createSubscription" asChild>
+              <Pressable className="mr-5">
+                <PlusIcon />
+              </Pressable>
+            </Link>
+          ),
           tabBarIcon: ({ color }) => (
             <FontAwesome size={28} name="line-chart" color={color} />
           ),
